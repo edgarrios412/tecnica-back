@@ -4,7 +4,12 @@ const { Book, Genre } = require("../db");
 
 module.exports = {
   getBooks: async () => {
-    const books = await Book.findAll()
+    const books = await Book.findAll({
+      include:[{
+      model: Genre,
+      attributes: ["name"]
+    }]
+  })
     return books
   },
   getBookById: async (id) => {
@@ -43,8 +48,10 @@ module.exports = {
   //   return [...recipeAPI, ...recipeDB];
   // },
   createBook: async (book) => {
-    const newBook = await Book.create(book);
-    newBook.addGenres(book.genres)
+    const generos = book.genres.map(g => Number(g.value))
+    const idioma = book.lang.label
+    const newBook = await Book.create({...book, lang:idioma});
+    newBook.addGenres(generos)
     return newBook;
   },
   updateBook: async(id, title) => {
