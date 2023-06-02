@@ -1,15 +1,39 @@
 // const axios = require("axios");
 // const { Op } = require("sequelize");
-const { Book, Genre } = require("../db");
+const { Book, Genre, Review } = require("../db");
 
 module.exports = {
   getBooks: async () => {
+    await Genre.findOrCreate({
+      where: { id: 1 },
+      defaults: { name: 'Accion' }
+    });
+    await Genre.findOrCreate({
+      where: { id: 2 },
+      defaults: { name: 'Comedia' }
+    });
+    await Genre.findOrCreate({
+      where: { id: 3 },
+      defaults: { name: 'Romance' }
+    });
+    await Genre.findOrCreate({
+      where: { id: 4 },
+      defaults: { name: 'Adultos' }
+    });
     const books = await Book.findAll({
       include:[{
       model: Genre,
       attributes: ["name"]
+    },{
+      model:Review
     }]
   })
+    // books.forEach(el => {
+    //   const total = el.reviews.reduce((ac, el) => {
+    //     return ac + el.rating;
+    //   }, 0)/el.reviews.lenght
+    //   el.totalRating = total
+    // })
     return books
   },
   getBookById: async (id) => {
@@ -24,29 +48,6 @@ module.exports = {
     })
     return findBook
   },
-  // getRecipeByName: async (name) => {
-  //   const recipe = await axios.get(
-  //     `https://api.spoonacular.com/recipes/complexSearch?query=${name}&addRecipeInformation=true&number=27&apiKey=${process.env.API_KEY}`
-  //   );
-  //   const recipeAPI = []
-  //   recipe.data.results.map(r => {
-  //     const obj= {
-  //     id:r.id,
-  //     title:r.title,
-  //     image:r.image,
-  //     created: "api",
-  //     healthScore: r.healthScore,
-  //     diets: r.diets,
-  //     }
-  //     recipeAPI.push(obj)
-  //   })
-  //   const recipeDB = await Recipe.findAll({
-  //     where:{
-  //       title:{[Op.iLike] : `%${name}%` }
-  //     }
-  //   })
-  //   return [...recipeAPI, ...recipeDB];
-  // },
   createBook: async (book) => {
     const generos = book.genres.map(g => Number(g.value))
     const idioma = book.lang.label
@@ -54,14 +55,18 @@ module.exports = {
     newBook.addGenres(generos)
     return newBook;
   },
-  updateBook: async(id, title) => {
+  updateBook: async(id, book) => {
     const findBook = await Book.findOne({where:{
       id:id
     }}) 
     if(findBook){
-      findBook.title = title
-      const book = await findBook.save()
-      return book;
+      if(book.title) findBook.title = book.title
+      if(book.image) findBook.image = book.image
+      if(book.summary) findBook.summary = book.summary
+      if(book.created) findBook.created = book.created
+      if(book.lang) findBook.lang = book.lang
+      const updatedBook = await findBook.save()
+      return updatedBook;
     }
     throw new Error("No hemos conseguido el libro")
   },

@@ -40,8 +40,9 @@ bookRoutes.post("/", async (req, res) => {
 
 bookRoutes.put("/:id", async (req,res) => {
   const {id} = req.params;
+  const book = req.body
   try {
-    const bookUpdated = await updateBook(id, "Superman")
+    const bookUpdated = await updateBook(id, book)
     res.status(200).send(bookUpdated);
   } catch(error){
     return res.status(404).send({ error: error.message });
