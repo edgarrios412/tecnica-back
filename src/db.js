@@ -39,10 +39,6 @@ Genre.belongsToMany(Book, { through: 'book_genre'})
 Author.hasMany(Book)
 Book.hasMany(Review)
 
-// Genre.create({id:1, name:"Accion"})
-// Genre.create({id:2, name:"Comedia"})
-// Genre.create({id:3, name:"Romance"})
-
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');

@@ -4,22 +4,6 @@ const { Book, Genre, Review } = require("../db");
 
 module.exports = {
   getBooks: async () => {
-    await Genre.findOrCreate({
-      where: { id: 1 },
-      defaults: { name: 'Accion' }
-    });
-    await Genre.findOrCreate({
-      where: { id: 2 },
-      defaults: { name: 'Comedia' }
-    });
-    await Genre.findOrCreate({
-      where: { id: 3 },
-      defaults: { name: 'Romance' }
-    });
-    await Genre.findOrCreate({
-      where: { id: 4 },
-      defaults: { name: 'Adultos' }
-    });
     const books = await Book.findAll({
       include:[{
       model: Genre,

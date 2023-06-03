@@ -31,6 +31,11 @@ module.exports = (sequelize) => {
     date:{
       type: DataTypes.STRING,
       defaultValue:"Hoy"
+    },
+    url:{
+      type:DataTypes.STRING,
+      defaultValue:null,
+      allowNull:true,
     }
   });
 };
