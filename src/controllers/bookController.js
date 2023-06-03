@@ -28,12 +28,6 @@ module.exports = {
       model:Review
     }]
   })
-    // books.forEach(el => {
-    //   const total = el.reviews.reduce((ac, el) => {
-    //     return ac + el.rating;
-    //   }, 0)/el.reviews.lenght
-    //   el.totalRating = total
-    // })
     return books
   },
   getBookById: async (id) => {
@@ -46,6 +40,7 @@ module.exports = {
         attributes: ["name"]
       }]
     })
+    if(!findBook) throw new Error("El libro con el ID "+ id+ " no existe")
     return findBook
   },
   createBook: async (book) => {
@@ -65,8 +60,8 @@ module.exports = {
       if(book.summary) findBook.summary = book.summary
       if(book.created) findBook.created = book.created
       if(book.lang) findBook.lang = book.lang
-      const updatedBook = await findBook.save()
-      return updatedBook;
+      await findBook.save()
+      return "Se ha actualizado el libro";
     }
     throw new Error("No hemos conseguido el libro")
   },
@@ -76,7 +71,7 @@ module.exports = {
     }}) 
     if(findBook){
       await findBook.destroy()
-      return "Eliminado satisfactoriamente";
+      return "Se ha eliminado el libro";
     }
     throw new Error("No hemos conseguido el libro")
   }
