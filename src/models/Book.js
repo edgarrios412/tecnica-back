@@ -32,7 +32,5 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue:"Hoy"
     }
-  },{
-    timestamps: false
-	});
+  });
 };
