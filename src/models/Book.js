@@ -34,8 +34,7 @@ module.exports = (sequelize) => {
     },
     url:{
       type:DataTypes.STRING,
-      defaultValue:null,
-      allowNull:true,
+      defaultValue:"https://edit.org/images/cat/portadas-libros-big-2019101610.jpg"
     }
   });
 };
