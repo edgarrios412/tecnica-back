@@ -32,6 +32,8 @@ Docs are available at http://localhost:3002/docs
 ```
 Al acceder a esa URL podrás ver los endpoints de la API
 
+* [Documentacion en linea](https://backend-rjg5.onrender.com/docs/)
+
 ## Construido con 🛠️
 
 * [Express](https://expressjs.com/es/) - El framework usado
