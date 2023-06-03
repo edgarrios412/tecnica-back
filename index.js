@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 4000;
 const {Genre} = require ("./src/db.js")
 
 // Syncing all the models at once.
-conn.sync({force: true }).then(() => {
+conn.sync({alter: true }).then(() => {
   Genre.findOrCreate({
     where: { id: 1 },
     defaults: { name: 'Accion' }
