@@ -24,6 +24,14 @@ Una vez instalado ya puedes levantar el servidor de forma local con el comando
 npm start
 ```
 
+## Documentación
+
+Para acceder a la documentación de la API al levantar el servidor te saldrá en la consola algo como esto:
+```
+Docs are available at http://localhost:3002/docs
+```
+Al acceder a esa URL podrás ver los endpoints de la API
+
 ## Construido con 🛠️
 
 * [Express](https://expressjs.com/es/) - El framework usado
